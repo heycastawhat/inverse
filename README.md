@@ -1,5 +1,7 @@
 # Inverse
 ---
+<img src="inverse.png" alt="Inverse logo">
+
 ## Hide photos, quickly and simply.
 ---
 ## Features
