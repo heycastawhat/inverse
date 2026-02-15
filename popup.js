@@ -25,6 +25,41 @@ document.getElementById("resetClick").addEventListener("click", async () => {
 function enableClickToZap() {
     document.body.style.cursor = "crosshair";
 
+    const doneBtn = document.createElement('button');
+    doneBtn.textContent = 'Done Zapping';
+    Object.assign(doneBtn.style, {
+        position: 'fixed',
+        bottom: '24px',
+        right: '24px',
+        zIndex: '999999',
+        background: '#89b4fa',
+        color: '#1e1e2e',
+        border: 'none',
+        borderRadius: '8px',
+        padding: '12px 24px',
+        fontSize: '1em',
+        cursor: 'pointer',
+        boxShadow: '0 2px 12px rgba(0,0,0,0.3)',
+    });
+    document.body.appendChild(doneBtn);
+
+    function exitZapMode() {
+        document.body.style.cursor = '';
+        doneBtn.remove();
+        document.querySelectorAll("img").forEach(img => {
+            img.style.outline = '';
+            img.style.cursor = '';
+        });
+        document.removeEventListener('keydown', onEscape);
+    }
+
+    function onEscape(e) {
+        if (e.key === 'Escape') exitZapMode();
+    }
+
+    doneBtn.addEventListener('click', exitZapMode);
+    document.addEventListener('keydown', onEscape);
+
     document.querySelectorAll("img").forEach(img => {
         img.addEventListener("click", function(e) {
             e.preventDefault();
