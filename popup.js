@@ -7,7 +7,7 @@ document.getElementById("zapClick").addEventListener("click", async () => {
         function: enableClickToZap
     });
 
-window.close();
+    window.close();
 });
 
 // image go hi hi
@@ -19,7 +19,7 @@ document.getElementById("resetClick").addEventListener("click", async () => {
         function: restoreImages
     });
 
-window.close();
+    window.close();
 });
 
 function enableClickToZap() {
@@ -34,18 +34,30 @@ function enableClickToZap() {
             setTimeout(() => {
                 this.style.display = 'none';
                 this.setAttribute('data-zapped', 'true');
+                const zapped = JSON.parse(localStorage.getItem('inverse-zapped') || '[]');
+                zapped.push(this.src);
+                localStorage.setItem('inverse-zapped', JSON.stringify(zapped));
             }, 300);
         }, { once: true, capture: true });
 
         img.style.outline = "2px solid red";
         img.style.cursor = "pointer";
     });
+
+    const zapped = JSON.parse(localStorage.getItem('inverse-zapped') || '[]');
+    document.querySelectorAll("img").forEach(img => {
+        if (zapped.includes(img.src)) {
+            img.style.display = 'none';
+            img.setAttribute('data-zapped', 'true');
+        }
+    });
 }
 
-
-
-
-
-// issues (found by amp) FIX 
-// The function `enableZap` is passed to executeScript but is not defined in this file. This will cause a ReferenceError at runtime.
-// Fix: Define `function enableZap() { ... }` within this file before referencing it.
+function restoreImages() {
+    localStorage.removeItem('inverse-zapped');
+    document.querySelectorAll('img[data-zapped="true"]').forEach(img => {
+        img.style.display = '';
+        img.style.opacity = '';
+        img.removeAttribute('data-zapped');
+    });
+}

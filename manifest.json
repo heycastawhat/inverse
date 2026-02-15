@@ -4,6 +4,9 @@
     "version": "1.0",
     "description": "Invert and modify page elements",
     "permissions": ["scripting", "activeTab"],
+    "background": {
+        "service_worker": "background.js"
+    },
     "action": {
         "default_popup": "popup.html"
     }
