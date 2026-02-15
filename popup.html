@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+    <style>
+        /* Catppuccin Mocha palette */
+        :root {
+            --ctp-base: #1e1e2e;
+            --ctp-mantle: #181825;
+            --ctp-surface0: #313244;
+            --ctp-surface1: #45475a;
+            --ctp-surface2: #585b70;
+            --ctp-text: #cdd6f4;
+            --ctp-subtext0: #a6adc8;
+            --ctp-subtext1: #bac2de;
+            --ctp-blue: #89b4fa;
+            --ctp-green: #a6e3a1;
+            --ctp-mauve: #cba6f7;
+            --ctp-pink: #f5c2e7;
+            --ctp-red: #f38ba8;
+            --ctp-yellow: #f9e2af;
+            --ctp-flamingo: #f2cdcd;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--ctp-base);
+            color: var(--ctp-text);
+            margin: 0;
+            padding: 24px 16px 16px 16px;
+            min-width: 220px;
+        }
+        h1 {
+            color: var(--ctp-mauve);
+            font-size: 1.5em;
+            margin-bottom: 18px;
+            letter-spacing: 1px;
+        }
+        button {
+            background: var(--ctp-surface1);
+            color: var(--ctp-text);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 1em;
+            margin: 0 8px 8px 0;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            box-shadow: 0 2px 8px 0 rgba(40,40,60,0.08);
+        }
+        button#zapClick {
+            background: var(--ctp-blue);
+            color: var(--ctp-base);
+        }
+        button#zapClick:hover {
+            background: var(--ctp-green);
+            color: var(--ctp-base);
+        }
+        button#resetClick {
+            background: var(--ctp-red);
+            color: var(--ctp-base);
+        }
+        button#resetClick:hover {
+            background: var(--ctp-yellow);
+            color: var(--ctp-base);
+        }
+    </style>
+    <h1>Inverse</h1>
+    <button id="zapClick">Zap</button>
+    <button id="resetClick">Reset</button>
+    <script src="popup.js"></script>
+</html>

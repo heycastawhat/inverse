@@ -1,0 +1,10 @@
+{
+    "manifest_version": 3,
+    "name": "Inverse",
+    "version": "1.0",
+    "description": "Invert and modify page elements",
+    "permissions": ["scripting", "activeTab"],
+    "action": {
+        "default_popup": "popup.html"
+    }
+}
