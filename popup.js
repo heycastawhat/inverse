@@ -22,6 +22,21 @@ document.getElementById("resetClick").addEventListener("click", async () => {
     window.close();
 });
 
+// block all images on this site
+document.getElementById("blockSite").addEventListener("click", async () => {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    const url = new URL(tab.url);
+    const hostname = url.hostname;
+
+    chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        function: blockSite,
+        args: [hostname]
+    });
+
+    window.close();
+});
+
 function enableClickToZap() {
     document.body.style.cursor = "crosshair";
 
@@ -96,3 +111,47 @@ function restoreImages() {
         img.removeAttribute('data-zapped');
     });
 }
+
+function blockSite(hostname) {
+    const blocked = JSON.parse(localStorage.getItem('inverse-blocked-sites') || '[]');
+    if (!blocked.includes(hostname)) {
+        blocked.push(hostname);
+        localStorage.setItem('inverse-blocked-sites', JSON.stringify(blocked));
+    }
+    document.querySelectorAll('img').forEach(img => {
+        img.style.display = 'none';
+        img.setAttribute('data-zapped', 'true');
+    });
+}
+
+// populate blocked sites list
+(async () => {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    const results = await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        function: () => JSON.parse(localStorage.getItem('inverse-blocked-sites') || '[]')
+    });
+    const blocked = results?.[0]?.result || [];
+    const list = document.getElementById('blockedList');
+    if (blocked.length === 0) return;
+    blocked.forEach(site => {
+        const item = document.createElement('div');
+        item.className = 'blocked-item';
+        item.innerHTML = `<span>${site}</span>`;
+        const btn = document.createElement('button');
+        btn.textContent = '✕';
+        btn.addEventListener('click', async () => {
+            await chrome.scripting.executeScript({
+                target: { tabId: tab.id },
+                function: (s) => {
+                    const b = JSON.parse(localStorage.getItem('inverse-blocked-sites') || '[]');
+                    localStorage.setItem('inverse-blocked-sites', JSON.stringify(b.filter(x => x !== s)));
+                },
+                args: [site]
+            });
+            item.remove();
+        });
+        item.appendChild(btn);
+        list.appendChild(item);
+    });
+})();

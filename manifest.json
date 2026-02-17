@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Inverse",
-  "version": "1.0",
+  "version": "1.01",
   "description": "Lightweight extension to hide images.",
   "background": {
     "service_worker": "background.js"

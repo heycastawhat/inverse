@@ -62,12 +62,46 @@
             background: var(--ctp-yellow);
             color: var(--ctp-base);
         }
+        hr {
+            border: none;
+            border-top: 1px solid var(--ctp-surface1);
+            margin: 12px 0;
+        }
+        button#blockSite {
+            background: var(--ctp-yellow);
+            color: var(--ctp-base);
+        }
+        button#blockSite:hover {
+            background: var(--ctp-flamingo);
+            color: var(--ctp-base);
+        }
+        #blockedList {
+            margin-top: 8px;
+            font-size: 0.85em;
+        }
+        .blocked-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+            color: var(--ctp-subtext0);
+        }
+        .blocked-item button {
+            background: var(--ctp-surface0);
+            color: var(--ctp-red);
+            padding: 2px 8px;
+            font-size: 0.85em;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
     <h1>Inverse</h1>
     <button id="zapClick">Zap</button>
     <button id="resetClick">Unzap</button>
+    <hr>
+    <button id="blockSite">Block Site</button>
+    <div id="blockedList"></div>
     <script src="popup.js"></script>
 </body>
 </html>
